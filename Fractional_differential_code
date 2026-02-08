@@ -1,0 +1,15 @@
+v=1;t=[1 2 3 4];f=[1 1 1 1;2 2 2 2];%t is the wavelength；f is the reflectivity；v is the order of derivation. 
+h = t(2) - t(1);
+[m,n] = size(f);
+w=1;%the coefficient of the starting term of % binomial is 1. 
+for j = 2:n
+    w(j) = w(j-1)*(1-(v+1)/(j-1));    %Recursive calculation of binomial coefficients 
+end
+for j=1:m
+    y = f(j,:)';%transposed to column vector is convenient to sum. 
+for i = 1:n
+    dy(j,i) = w(1:i)*(y(i:-1:1))/h^v;   %  Calculate the value of the fractional differential or integral of a given function.
+end
+end
+dlmwrite('fractionaldifferential.txt',dy);
+
